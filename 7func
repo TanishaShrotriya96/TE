@@ -1,0 +1,30 @@
+//3476 
+//Assignment 7
+
+delimiter //
+create function tot(c varchar(10))
+returns int
+begin 
+declare cnt int;
+select count(*) into cnt from student where class=c;
+return cnt;
+end //
+delimiter ;
+
+mysql> Select tot("DISTINC") ;
++----------------+
+| tot("DISTINC") |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> Select tot("FAIL") ;
++-------------+
+| tot("FAIL") |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.01 sec)
+
+

@@ -1,0 +1,159 @@
+
+
+> db.createCollection("Student")
+{ "ok" : 1 }
+
+> show collections
+Student
+Teacher
+system.indexes
+> 
+
+> db.Student.insert({roll:1,p_method:"cash"})
+WriteResult({ "nInserted" : 1 })
+
+> db.Student.find()
+{ "_id" : ObjectId("599d0c9d910e9ef9348837e4"), "roll" : 1, "p_method" : "cash" }
+
+============== UPDATE ======================
+> db.Student.update({roll:1},{$set : {roll:1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+
+> db.Student.update({roll:1},{$set : {roll:2}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+> db.Student.find()
+{ "_id" : ObjectId("599d0c9d910e9ef9348837e4"), "roll" : 2, "p_method" : "cash" }
+
+> db.Student.insert({roll:2,p_method:"DD",dd_num:12345})
+WriteResult({ "nInserted" : 1 })
+
+> db.Student.find()
+{ "_id" : ObjectId("599d0c9d910e9ef9348837e4"), "roll" : 2, "p_method" : "cash" }
+{ "_id" : ObjectId("599d0cdc910e9ef9348837e5"), "roll" : 2, "p_method" : "DD", "dd_num" : 12345 }
+
+> db.Student.find().pretty()
+{
+	"_id" : ObjectId("599d0c9d910e9ef9348837e4"),
+	"roll" : 2,
+	"p_method" : "cash"
+}
+{
+	"_id" : ObjectId("599d0cdc910e9ef9348837e5"),
+	"roll" : 2,
+	"p_method" : "DD",
+	"dd_num" : 12345
+}
+============== FIND WHERE =============
+
+> db.Student.find({p_method:"cash"}).pretty()
+{
+	"_id" : ObjectId("599d0c9d910e9ef9348837e4"),
+	"roll" : 2,
+	"p_method" : "cash"
+}
+
+> db.Student.find({p_method:"DD"}).pretty()
+{
+	"_id" : ObjectId("599d0cdc910e9ef9348837e5"),
+	"roll" : 2,
+	"p_method" : "DD",
+	"dd_num" : 12345
+}
+{
+	"_id" : ObjectId("599d1141910e9ef9348837e6"),
+	"roll" : 2,
+	"p_method" : "DD",
+	"dd_num" : 12345
+}
+============ REMOVE ===================
+
+> db.Student.remove({"_id" : ObjectId("599d0cdc910e9ef9348837e5")})
+WriteResult({ "nRemoved" : 1 })
+
+> db.Student.find({p_method:"DD"}).pretty()
+{
+	"_id" : ObjectId("599d1141910e9ef9348837e6"),
+	"roll" : 2,
+	"p_method" : "DD",
+	"dd_num" : 12345
+}
+
+=============== ALTER ========
+
+> db.Student.update({},{$set : {"for" : "Admissions" }},{multi :true})
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+> db.Student.find().pretty()
+{
+	"_id" : ObjectId("599d0c9d910e9ef9348837e4"),
+	"roll" : 2,
+	"p_method" : "cash",
+	"for" : "Admissions"
+}
+{
+	"_id" : ObjectId("599d1141910e9ef9348837e6"),
+	"roll" : 2,
+	"p_method" : "DD",
+	"dd_num" : 12345,
+	"for" : "Admissions"
+}
+{
+	"_id" : ObjectId("599d139c910e9ef9348837e7"),
+	"roll" : 2,
+	"p_method" : "Installments",
+	"num" : "1st install paid",
+	"due_date" : "1/12/2017",
+	"for" : "Admissions"
+}
+
+> db.Student.update({"_id" : ObjectId("599d1141910e9ef9348837e6")},{$set : {"Marks" : 9,roll:3}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Student.find().pretty()
+{
+	"_id" : ObjectId("599d0c9d910e9ef9348837e4"),
+	"roll" : 1,
+	"p_method" : "cash",
+	"for" : "Admissions",
+	"Marks" : 10
+}
+{
+	"_id" : ObjectId("599d1141910e9ef9348837e6"),
+	"roll" : 3,
+	"p_method" : "DD",
+	"dd_num" : 12345,
+	"for" : "Admissions",
+	"Marks" : 9
+}
+{
+	"_id" : ObjectId("599d139c910e9ef9348837e7"),
+	"roll" : 2,
+	"p_method" : "Installments",
+	"num" : "1st install paid",
+	"due_date" : "1/12/2017",
+	"for" : "Admissions"
+}
+========== GREATER THAN LESS THAN ================================
+
+> db.Student.find({Marks : {$gt : 5}}).pretty()
+{
+	"_id" : ObjectId("599d0c9d910e9ef9348837e4"),
+	"roll" : 1,
+	"p_method" : "cash",
+	"for" : "Admissions",
+	"Marks" : 10
+}
+{
+	"_id" : ObjectId("599d1141910e9ef9348837e6"),
+	"roll" : 3,
+	"p_method" : "DD",
+	"dd_num" : 12345,
+	"for" : "Admissions",
+	"Marks" : 9
+}
+
+====================================================================
+
+> db.Student.find({Marks : {$lt : 9}}).count()
+1
+

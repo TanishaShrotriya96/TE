@@ -64,8 +64,24 @@ public class mongoConnection {
 			BasicDBObject doc2= new BasicDBObject("roll",new BasicDBObject("$gt",roll));
 			DBCursor c3=c.find(doc2);
 			while(c3.hasNext()) {
-				System.out.println(c3.next());
+				System.out.println(c3.next());	
 			}
+			
+			System.out.println("Enter the roll number to update: ");
+			roll=sc.nextInt();
+			BasicDBObject old= new BasicDBObject("roll",roll);
+			
+			System.out.println("Enter updated value: ");
+			roll=sc.nextInt();
+			BasicDBObject new1= new BasicDBObject("$set",new BasicDBObject("roll",roll));
+			
+			DBCursor c4=c.find();
+			c.update(old,new1);
+			
+			while(c4.hasNext()) {
+				System.out.println(c4.next());	
+			}
+			
 			System.out.println("Do you wish to continue?");
 			ch=sc.next();
 		}while(ch.equals("y"));

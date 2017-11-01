@@ -1,0 +1,120 @@
+Assignmnet 9 
+3476
+
+mysql> Select * from o_roll;
++------+---------+----------+
+| roll | name    | addr     |
++------+---------+----------+
+|    1 | Manci   | Pune     |
+|    2 | Kaustub | Nagpur   |
+|    3 | Trupti  | Baramati |
+|    4 | Milind  | Sangli   |
+|    5 | Usha    | Delhi    |
+|    6 | Deepti  | Pune     |
++------+---------+----------+
+6 rows in set (0.00 sec)
+
+mysql> Select * from n_roll;
+Empty set (0.01 sec)
+
+Assn 9 a) Cursor to copy from o_roll to n_roll if not exists in n_roll
+
+Delimiter //
+create procedure cur2() 
+begin
+declare r int;
+declare exit int default 0;
+declare c1 cursor for select roll from o_roll;
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND set exit=1;
+
+open c1;
+
+l1 : loop
+fetch c1 into r;
+if not exists(select * from n_roll where roll=r) then
+   insert into n_roll select * from o_roll where roll=r;
+end if;  
+
+if exit=1 then 
+ close c1;
+end if;
+end loop l1;
+close c1;
+end //
+delimiter ;
+
+mysql> call cur2();
+mysql> select * from n_roll;
++------+---------+----------+
+| roll | name    | addr     |
++------+---------+----------+
+|    1 | Manci   | Pune     |
+|    2 | Kaustub | Nagpur   |
+|    3 | Trupti  | Baramati |
+|    4 | Milind  | Sangli   |
+|    5 | Usha    | Delhi    |
+|    6 | Deepti  | Pune     |
++------+---------+----------+
+6 rows in set (0.00 sec)
+
+Assn 9 b) Parameterized Cursor to copy from o_roll to n_roll for all roll = rno
+
+mysql> select * from n_roll;
+Empty set (0.00 sec)
+
+ Delimiter //                                                             
+ create procedure cur_para(in rno int) 
+ begin 
+ declare c1 cursor for select roll from o_roll where roll=rno;
+ open c1;
+ fetch c1 into rno;
+ if not exists (select * from n_roll where roll=rno) then
+ insert into n_roll select * from o_roll where roll=rno;
+ end if;
+ close c1;
+ end //
+ Delimiter ;
+
+mysql> select * from n_roll;
++------+---------+--------+
+| roll | name    | addr   |
++------+---------+--------+
+|    2 | Kaustub | Nagpur |
++------+---------+--------+
+1 row in set (0.00 sec)
+
+Assn 9 c) Parameterized Cursor to copy from o_roll to n_roll for all roll > rno
+
+ Delimiter //                                                             
+ create procedure cur_g(in rno int) 
+ begin 
+ declare c1 cursor for select roll from o_roll where roll>rno;
+ open c1;
+ L1 : loop
+ fetch c1 into rno;
+ if not exists (select * from n_roll where roll=rno) then
+ insert into n_roll select * from o_roll where roll=rno;
+ end if;
+ end loop l1;
+ close c1;
+ end //
+ Delimiter ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> delimiter ;
+mysql> call cur_para(1);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> call cur_g(4);
+mysql> select * from n_roll;
++------+---------+--------+
+| roll | name    | addr   |
++------+---------+--------+
+|    2 | Kaustub | Nagpur |
+|    5 | Usha    | Delhi  |
+|    6 | Deepti  | Pune   |
++------+---------+--------+
+3 rows in set (0.00 sec)
+
