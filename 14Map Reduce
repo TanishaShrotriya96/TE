@@ -162,6 +162,31 @@
 	{ "_id" : "profession", "value" : "count: 5" }
 
 
+var mapper = function() {for(doc in this){ emit(doc,1); } }
+var reducer = function(doc,cnt){return Array.sum(cnt);}
+db.customers.mapReduce(mapper,reducer,{out:"mpq"})
+{
+	"result" : "mpq",
+	"timeMillis" : 672,
+	"counts" : {
+		"input" : 5,
+		"emit" : 35,
+		"reduce" : 7,
+		"output" : 7
+	},
+	"ok" : 1
+}
+> db.mpq.find()
+{ "_id" : "_id", "value" : 5 }
+{ "_id" : "dob", "value" : 5 }
+{ "_id" : "email", "value" : 5 }
+{ "_id" : "gender", "value" : 5 }
+{ "_id" : "hobbies", "value" : 5 }
+{ "_id" : "name", "value" : 5 }
+{ "_id" : "profession", "value" : 5 }
+> 
+
+
 	5)Write a map reduce query for finding the count of persons having less than 3 hobbies or 3 or 	         more hobbies in the Customer Collection.
 
 	var mapper5=function(){

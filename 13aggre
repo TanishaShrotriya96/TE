@@ -36,20 +36,20 @@ db.stud.aggregate({$match : {class:"TE"}}).pretty()
 }
 
 ===================================================================
-
+2)
 > db.stud.aggregate({$match : {class:"TE"}},{$project:{roll:1,class:1,_id:0}})
 { "roll" : 1, "class" : "TE" }
 { "roll" : 4, "class" : "TE" }
 { "roll" : 67, "class" : "TE" }
 
 =======================================================================
-
+3)
 > db.stud.aggregate({$match :{$and:[{class:"TE"},{marks:{$gt:80}}]}},{$project:{marks:1,class:1,_id:0}})
 { "class" : "TE", "marks" : 90 }
 { "class" : "TE", "marks" : 99 }
 
 ========================================================================
-
+4)
 > db.stud.aggregate({$project:{marks:1,name:1,class:1,_id:0}})
 { "name" : "Manci", "class" : "TE", "marks" : 90 }
 { "name" : "Tejal", "class" : "SE", "marks" : 89 }
@@ -59,12 +59,14 @@ db.stud.aggregate({$match : {class:"TE"}}).pretty()
 { "name" : "Sakshi", "class" : "TE", "marks" : 99 }
 
 =============================================================================
+5)
 >db.stud.aggregate({$match :{class:"TE"}},{$project:{name:1,marks:1,class:1,_id:0}})
 { "name" : "Manci", "class" : "TE", "marks" : 90 }
 { "name" : "Susan", "class" : "TE", "marks" : 70 }
 { "name" : "Sakshi", "class" : "TE", "marks" : 99 }
 
 ==================================================================================
+6)
 > db.stud.aggregate({$match :{class:"TE"}},{$project:{name:1,marks:1,class:1,_id:0}},{$sort:{marks:-1}})
 { "name" : "Sakshi", "class" : "TE", "marks" : 99 }
 { "name" : "Manci", "class" : "TE", "marks" : 90 }
@@ -74,20 +76,24 @@ db.stud.aggregate({$match : {class:"TE"}}).pretty()
 { "name" : "Janhvi", "class" : "TE", "marks" : 50 }
 
 =====================================================================================
+7)
 > db.stud.aggregate({$match :{class:"TE"}},{$project:{name:1,marks:1,class:1,_id:0}},{$sort:{marks:-1}},{$limit:3})
 { "name" : "Sakshi", "class" : "TE", "marks" : 99 }
 { "name" : "Manci", "class" : "TE", "marks" : 90 }
 { "name" : "Namrata", "class" : "TE", "marks" : 80 }
 ===================================================================================
+8)
 > db.stud.aggregate({$group :{_id:"$class",count:{$sum:1}}})
 { "_id" : "SE", "count" : 3 }
 { "_id" : "TE", "count" : 6 }
 
 ==========================================================================================
+9)
 > db.stud.aggregate({$group :{_id:"$class",count:{$sum:1},av:{$avg:"$marks"}}})
 { "_id" : "SE", "count" : 3, "av" : 79.66666666666667 }
 { "_id" : "TE", "count" : 6, "av" : 74.83333333333333 }
 =======================================================================================
+10)
 > db.stud.aggregate({$sort:{marks:-1}},{$group :{_id:"$class",name:{$first:"$name"},max:{$max:"$marks"}}})
 { "_id" : "SE", "name" : "Tejal", "max" : 89 }
 { "_id" : "TE", "name" : "Sakshi", "max" : 99 }
