@@ -92,7 +92,7 @@ int main()
      
     //Division
     int rrem[rs+1];
-    for(i=0;i<fs+rs;i++)
+    for(i=0;i<fs;i++)
     {
         j=0;
         k=i;
@@ -111,15 +111,31 @@ int main()
                        temp[k]=1;   
                        rrem[j]=1; //storing remainder too
                 }
+            
+            //    cout<<rrem[j];
+                temp[k]=rrem[j];
             }
+		cout<<endl;
         }
+	else {
+		
+            for(j=0,k=i;j<gs;j++,k++)
+            {
+                rrem[j]=temp[k];
+            //    cout<<rrem[j];
+            }
+		cout<<endl;
+   
+	}
     } 
     cout<<"\n Remainder: ";
 
     for(i=0;i<1+rs;i++)
     {
         cout<<rrem[i];
-    } 
+    }
+   
+ 
     int flag=0;
     for(i=0;i<1+rs;i++)
     {
@@ -179,4 +195,16 @@ Enter received data bits one by one
 
  Remainder: 0011
  Since Remainder Is Not 0 Hence Message Transmitted From Sender To Receriver Contains Error
+*/
+
+/*
+• The polynomial generator should have following properties:
+
+1. It should have at least two terms.
+
+2. The coefficient of the term x0 should be 1.
+
+3. It should not be divisible by x.
+
+4. It should be divisible by x+ 1. 
 */

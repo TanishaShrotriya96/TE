@@ -31,75 +31,60 @@ int main()
         bzero(&(server_addr.sin_zero),8);
 
 
-        if (bind(sock,(struct sockaddr *)&server_addr,
-            sizeof(struct sockaddr)) == -1)
+        if (bind(sock,(struct sockaddr *)&server_addr,sizeof(struct sockaddr)) == -1)
         {
             perror("Bind");
             exit(1);
         }
 
         addr_len = sizeof(struct sockaddr);
-		
-	printf("\nUDPServer Waiting for client on port 5000");
+	    printf("\nUDPServer Waiting for client on port 5000");
         fflush(stdout);
 
 //-------------------- Socket creation completed ----------------------------------------------------
 	while (1)
 	{
-          bytes_read = recvfrom(sock,recv_data,1024,0,
- 	                    (struct sockaddr *)&server_addr, &addr_len);
-	  
-
-	  recv_data[bytes_read] = '\0';
-
-          printf("\n(%s , %d) said3 : ",inet_ntoa(server_addr.sin_addr),
-                                       ntohs(server_addr.sin_port));
-          printf("%s", recv_data);
-
-	  fflush(stdout);
-          
-          // recv_data=file name that client is asking for.
+        bytes_read = recvfrom(sock,recv_data,1024,0,(struct sockaddr *)&server_addr, &addr_len);
+ 	    recv_data[bytes_read] = '\0';
+        printf("\n(%s , %d) said3 : ",inet_ntoa(server_addr.sin_addr),ntohs(server_addr.sin_port));
+        printf("%s", recv_data);
+        fflush(stdout);
+         // recv_data=file name that client is asking for.
        
-	   int filefd;
-	   ssize_t read_return;
-	   char buffer[1024];
+        int filefd;
+        ssize_t read_return;
+        char buffer[1024];
 	   
-	 //open file 
-	    filefd = open(recv_data, O_RDONLY);
-            printf("Opened", recv_data);
-	    fflush(stdout);
+		 //open file 
+	  	filefd = open(recv_data, O_RDONLY);
+        printf("Opened", recv_data);
+   	    fflush(stdout);
 
-
-	    if (filefd == -1) {
-		perror("open here");
-		exit(EXIT_FAILURE);
-	    }
-///READ FILE INTO BUFFER
+    	if (filefd == -1) {
+			perror("open here");
+			exit(EXIT_FAILURE);
+    	}
+		 //READ FILE INTO BUFFER
 	    read_return = read(filefd, buffer,1024);
 	    if (read_return == -1) {
 		    perror("read");
 		    exit(EXIT_FAILURE);
 	    }
 
- 	//WRTIE TO CLIENT
-	 if ( sendto(sock,buffer,strlen(buffer), 0,
-
-              (struct sockaddr *)&server_addr, sizeof(struct sockaddr))
-
-    == -1) {
+ 	     //WRTIE TO CLIENT
+		if ( sendto(sock,buffer,strlen(buffer), 0,(struct sockaddr *)&server_addr, sizeof(struct sockaddr))== -1) {
 		    perror("write");
-
 		    exit(EXIT_FAILURE);
-
-	     }
+	    }
 	
 	    else {
-		printf("File Sent"); 
-		  fflush(stdout);
-
+			printf("File Sent"); 
+			fflush(stdout);
 	    }
+
 	    close(filefd);
-        }
-return 0;
+    }
+
+	return 0;
 }
 

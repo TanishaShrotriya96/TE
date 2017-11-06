@@ -1,4 +1,5 @@
 // Server side C/C++ program to demonstrate Socket programming
+
 #include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
@@ -9,16 +10,13 @@
 //Used for the file properties and permissions
 #include <unistd.h>
 #include <fcntl.h>
-
 #include<math.h>
-
-
 
 void files(int sock);
 void calculator(int sock);
 void trig(int sock);
 
-int main(int argc, char const *argv[])
+int main()
 {
     int server_fd, new_socket, valread;
     struct sockaddr_in address;
@@ -35,8 +33,7 @@ int main(int argc, char const *argv[])
     }
       
     // Forcefully attaching socket to the port 8080
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
-                                                  &opt, sizeof(opt)))
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,&opt, sizeof(opt)))
     {
         perror("setsockopt");
         exit(EXIT_FAILURE);
@@ -46,8 +43,7 @@ int main(int argc, char const *argv[])
     address.sin_port = htons( PORT );
       
     // Forcefully attaching socket to the port 8080
-    if (bind(server_fd, (struct sockaddr *)&address, 
-                                 sizeof(address))<0)
+    if (bind(server_fd, (struct sockaddr *)&address,sizeof(address))<0)
     {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -57,13 +53,13 @@ int main(int argc, char const *argv[])
         perror("listen");
         exit(EXIT_FAILURE);
     }
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, 
-                       (socklen_t*)&addrlen))<0)
+    if ((new_socket = accept(server_fd,(struct sockaddr*)&address,(socklen_t*)&addrlen))<0)
     {
         perror("accept");
         exit(EXIT_FAILURE);
     }
-int choice=0;
+
+	int choice=0;
  
 	while(choice != 5) {
 
@@ -75,25 +71,22 @@ int choice=0;
 
 		switch(ntohl(choice)) {
 
- 		   case 1: send(new_socket , hello , strlen(hello) , 0 );
-                           printf("\nHello message sent\n");
-                           valread = read( new_socket , buffer, 1024);
-                           printf("%s\n",buffer );
-			   break;
-                  case 2 : files(new_socket);
-                           
-                           break;
-                  case 3 : calculator(new_socket);
-                           break;
-                  case 4 : trig(new_socket);
-                           break;
+ 		  case 1 : send(new_socket , hello , strlen(hello) , 0 );
+               printf("\nHello message sent\n");
+               valread = read( new_socket , buffer, 1024);
+               printf("%s\n",buffer );
+			         break;
+      case 2 : files(new_socket);                       
+               break;
+      case 3 : calculator(new_socket);
+               break;
+      case 4 : trig(new_socket);
+               break;
 		  case 5 : exit(EXIT_SUCCESS);
-                           break;
+               break;
                   }
 	}
-
-
-    return 0;
+  return 0;
 }
 
 void files(int new_socket) {
@@ -103,10 +96,12 @@ void files(int new_socket) {
     int filefd;
     ssize_t read_return;
 
-    filefd = open(file_path,
-        O_WRONLY | O_CREAT | O_TRUNC,
-        S_IRUSR | S_IWUSR);
-
+    filefd = open(file_path,O_WRONLY | O_CREAT | O_TRUNC,S_IRUSR | S_IWUSR);
+    //O_WRONLY = write only 
+    //O_CREAT = create if not existing else open as it is
+    // O_TRUNC = clear if exists hence overwrite                    
+    //S_IRUSR= read priviledges to owner of file
+    //S_IWUSR=write priviledges to owner of file
     if (filefd == -1) {
     	perror("open");
    	exit(EXIT_FAILURE);
@@ -159,13 +154,13 @@ void calculator(int new_socket) {
                     break;
            case 4 : res=n1/n2;
                     break;  
+      }
+      int converted_number = htonl(res);
+      printf("Sending value %d\n",res);
+      // Write the number to the opened socket
+      write(new_socket, &converted_number, sizeof(converted_number));
+      } 
     }
-    int converted_number = htonl(res);
-    printf("Sending value %d\n",res);
-    // Write the number to the opened socket
-    write(new_socket, &converted_number, sizeof(converted_number));
-    }
-}
 }
 void trig(int new_socket) {
 
@@ -199,14 +194,14 @@ void trig(int new_socket) {
                     break;  
            default: res=0;
                     break; 
+      }
+      int r = res*100;
+      int converted_number = htonl(r);
+      printf("Sending value %lf\n",res);
+      // Write the number to the opened socket
+      write(new_socket, &converted_number, sizeof(converted_number));
+      }
     }
-    int r = res*100;
-    int converted_number = htonl(r);
-    printf("Sending value %lf\n",res);
-    // Write the number to the opened socket
-    write(new_socket, &converted_number, sizeof(converted_number));
-    }
-}
 
 }
 

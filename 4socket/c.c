@@ -16,7 +16,7 @@ void files(int sock);
 void calculator(int sock);
 void trig(int sock);
 
-int main(int argc, char const *argv[])
+int main()
 {
     struct sockaddr_in serv_addr;
     int sock = 0, valread;    
@@ -76,7 +76,8 @@ void files(int sock) {
     ssize_t read_return;
     char buffer[1024];
     //open file 
-    filefd = open(file_path, O_RDONLY);
+  
+   filefd = open(file_path, O_RDONLY);
     if (filefd == -1) {
         perror("open here");
         exit(EXIT_FAILURE);
@@ -122,7 +123,7 @@ void calculator(int sock) {
 	      converted_number = htonl(num2);
 	      write(sock, &converted_number, sizeof(converted_number));
 	      
-	      read( sock,&res,sizeof(res));
+	      read(sock,&res,sizeof(res));
 	      converted_number=ntohl(res); 
 	      printf("The result is : %d\n",converted_number);
 	}
@@ -153,7 +154,7 @@ void trig(int sock) {
 	      converted_number = htonl(num1);
 	      write(sock, &converted_number, sizeof(converted_number));
 
-	      read( sock,&res,sizeof(res));
+	      read(sock,&res,sizeof(res));
 	      converted_number=ntohl(res); 
 	      //read result is an int so convert to double and get back original value by /100
 	      double fin = converted_number;
