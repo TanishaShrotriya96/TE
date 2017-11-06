@@ -91,10 +91,15 @@ public class receiver {
 	        			fail=0;
 	        			
 	        			while(!data.isEmpty()) {
+	        				if(data.element().packet!=-2) {
+	        					data.remove();
+	        					fail=fail+1;
+	        				}
+	        				else {
+	        					data.remove();
+	        				}
 	        				
-	        				data.remove();
-	        				fail=fail+1;
-	        				//all the already received packets need ot be considered for 
+	        				//all the already received packets need to be considered for 
 	        				//the actual fail value too.
 	        				//totalIterations++;
 	        			}

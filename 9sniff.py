@@ -37,7 +37,7 @@ while True:
     print 'Destination MAC : ' + eth_addr(packet[0:6]) + ' Source MAC : ' + eth_addr(packet[6:12]) + ' Protocol : ' + str(eth_protocol)
  
     #Parse IP packets, IP Protocol number = 8
-    '''
+    
     if eth_protocol == 8 :
         #Parse IP header
         #take first 20 characters for the ip header
@@ -134,7 +134,7 @@ while True:
         #some other IP packet like IGMP
         else :
             print 'Protocol other than TCP/UDP/ICMP'
-    '''
+    
     print
 
 
