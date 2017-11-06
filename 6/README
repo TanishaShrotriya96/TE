@@ -12,7 +12,7 @@ https://www.youtube.com/watch?v=qnutENivC14&t=639s
 
 Selective Repeat is a further modification of the same code above.
 
-/*===================================================================================================================================
+/*==========================================================================================
 
 OUTPUT FOR GoBackN:
 
@@ -120,20 +120,11 @@ Total packets sent after packet failures : 11
 
 RECEIVER SIDE :
 
- []
- [Packet:1 |failStatus:1 |ack:-1]
- [Packet:1 |failStatus:1 |ack:-1, Packet:2 |failStatus:2 |ack:-1]
- [Packet:1 |failStatus:1 |ack:-1, Packet:2 |failStatus:2 |ack:-1, Packet:3 |failStatus:3 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:-1, Packet:3 |failStatus:3 |ack:-1, Packet:4 |failStatus:4 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:-1, Packet:4 |failStatus:4 |ack:-1, Packet:5 |failStatus:5 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:-1, Packet:5 |failStatus:5 |ack:-1, Packet:6 |failStatus:6 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:-1, Packet:6 |failStatus:6 |ack:-1, Packet:7 |failStatus:1 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:6 |failStatus:6 |ack:-1, Packet:7 |failStatus:1 |ack:-1, Packet:8 |failStatus:2 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:-1 |failStatus:-1 |ack:-1, Packet:7 |failStatus:1 |ack:-1, Packet:8 |failStatus:2 |ack:-1, Packet:9 |failStatus:3 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:6 |failStatus:4 |ack:6, Packet:7 |failStatus:1 |ack:-1, Packet:8 |failStatus:2 |ack:-1, Packet:9 |failStatus:3 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:6 |failStatus:4 |ack:6, Packet:7 |failStatus:1 |ack:7, Packet:8 |failStatus:2 |ack:-1, Packet:9 |failStatus:3 |ack:-1, Packet:10 |failStatus:5 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:6 |failStatus:4 |ack:6, Packet:7 |failStatus:1 |ack:7, Packet:8 |failStatus:2 |ack:8, Packet:9 |failStatus:3 |ack:-1, Packet:10 |failStatus:5 |ack:-1, Packet:-2 |failStatus:6 |ack:-1]
- [Packet:1 |failStatus:1 |ack:1, Packet:2 |failStatus:2 |ack:2, Packet:3 |failStatus:3 |ack:3, Packet:4 |failStatus:4 |ack:4, Packet:5 |failStatus:5 |ack:5, Packet:6 |failStatus:4 |ack:6, Packet:7 |failStatus:1 |ack:7, Packet:8 |failStatus:2 |ack:8, Packet:9 |failStatus:3 |ack:9, Packet:10 |failStatus:5 |ack:-1, Packet:-2 |failStatus:6 |ack:-1, Packet:-2 |failStatus:1 |ack:-1]
+Failed packet detected : Packet:6 |FailStatus:6 |ack:-1
+Packet value set as -1 : Packet:-1 |FailStatus:-1 |ack:-1
+Updated failed packet position : 
+Packet:6 |FailStatus:4 |ack:-1
+
 
  */
 
