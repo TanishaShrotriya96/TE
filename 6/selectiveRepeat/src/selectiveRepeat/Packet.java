@@ -14,6 +14,6 @@ public class Packet {
 	
 	public String toString() {
 		
-		return "Packet:"+packet+" |failStatus:"+ failStatus +" |ack:"+ack;
+		return "Packet:"+packet+" |FailStatus:"+ failStatus +" |ack:"+ack;
 	}
 }

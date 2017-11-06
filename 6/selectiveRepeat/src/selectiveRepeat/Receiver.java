@@ -39,7 +39,7 @@ public class Receiver {
 	        int flag=0;
 	        
 	        while(ack!=frame) {
-	        	System.out.println(" "+info.toString());
+	        	
 	        	Packet pack=new Packet();
 	        	pack.packet=din.readInt();
 	        	pack.failStatus=fail;
@@ -60,6 +60,7 @@ public class Receiver {
         				x.failStatus=pack.failStatus;
         				x.packet=pack.packet;
         				flag=1;
+        				System.out.println("Updated failed packet position : \n"+x.toString());
         				break;
         			}
         		}
@@ -78,8 +79,10 @@ public class Receiver {
                             break;
 		        		}
 		        		else if(x.failStatus==f) {
+		        			System.out.println("Failed packet detected : "+x.toString());
 		        			x.failStatus=-1;
 		        		    x.packet=-1;
+		        		    System.out.println("Packet value set as -1 : "+x.toString());
 		        			dout.writeInt(-1);	
 		        			break;
 		        		}
