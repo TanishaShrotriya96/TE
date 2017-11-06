@@ -28,8 +28,6 @@ public class receiver {
 		ObjectInputStream i;
 		DataOutputStream dout;
 		DataInputStream din;
-
-    //    int totalIterations=0;
 		
 		try {
 			s = new ServerSocket(1234);
@@ -81,7 +79,6 @@ public class receiver {
 	        			//next from front of q
 	        			
 	        			data.remove();
-	        			//totalIterations++;
 	        		}
 	        		else if(data.element().failStatus==f) {
 	        			
@@ -117,13 +114,10 @@ public class receiver {
 
 	    	
 	    	S.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
 		
 		}
-		
-	//	System.out.println("Total iterations required are : "+totalIterations);
-				
 	}
 }
