@@ -31,18 +31,11 @@ int main()
         perror("socket failed");
         exit(EXIT_FAILURE);
     }
-      
-    // Forcefully attaching socket to the port 8080
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,&opt, sizeof(opt)))
-    {
-        perror("setsockopt");
-        exit(EXIT_FAILURE);
-    }
+     
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons( PORT );
       
-    // Forcefully attaching socket to the port 8080
     if (bind(server_fd, (struct sockaddr *)&address,sizeof(address))<0)
     {
         perror("bind failed");
@@ -177,9 +170,9 @@ void trig(int new_socket) {
       send(new_socket , mess , strlen(mess) , 0 );
       read(new_socket ,&num1,sizeof(num1));
 
-      double n1= (double)ntohl(num1); 
+      int n2= ntohl(num1); 
       
-      n1=n1*(3.14)/18000; //to get rid of the * 100 on client side
+      double n1=n2*(3.14)/18000; //to get rid of the * 100 on client side
       
       //pi/10	
       switch(choice) {
