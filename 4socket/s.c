@@ -85,32 +85,28 @@ int main()
 void files(int new_socket) {
 
     char *file_path = "output.tmp";
+    char buf[1024]={0};
     char buffer[1024];
     int filefd;
     ssize_t read_return;
 
-    filefd = open(file_path,O_WRONLY | O_CREAT | O_TRUNC,S_IRUSR | S_IWUSR);
-    //O_WRONLY = write only 
-    //O_CREAT = create if not existing else open as it is
-    // O_TRUNC = clear if exists hence overwrite                    
-    //S_IRUSR= read priviledges to owner of file
-    //S_IWUSR=write priviledges to owner of file
+    read(new_socket,buf,1024);
+    filefd = open(buf, O_RDONLY);
     if (filefd == -1) {
-    	perror("open");
-   	exit(EXIT_FAILURE);
+        perror("open here");
+        exit(EXIT_FAILURE);
     }
-    
-    read_return = read(new_socket, buffer, BUFSIZ);
+    read_return = read(filefd, buffer,1024);
     if (read_return == -1) {
-        perror("read");
-        exit(EXIT_FAILURE);
+            perror("read");
+            exit(EXIT_FAILURE);
     }
-    if (write(filefd, buffer, read_return) == -1) {
-        perror("write");
-        exit(EXIT_FAILURE);
-    }
-    else { 
-        printf("\nFile received");
+    if (write(new_socket, buffer, read_return) == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+     }
+    else {
+        printf("File Sent\n"); 
     }
     close(filefd);
     

@@ -71,28 +71,40 @@ int main()
 }
 
 void files(int sock) {
+
     char *file_path = "c.c";
+    char buf[1024] = {0};
     int filefd;
     ssize_t read_return;
     char buffer[1024];
     //open file 
+    
+    printf("Enter file name" );
+    scanf("%s",buf);  
+    send(sock , buf ,1024, 0 );
   
-   filefd = open(file_path, O_RDONLY);
+    filefd = open(buf,O_WRONLY | O_CREAT | O_TRUNC,S_IRUSR | S_IWUSR);
+    //O_WRONLY = write only 
+    //O_CREAT = create if not existing else open as it is
+    // O_TRUNC = clear if exists hence overwrite                    
+    //S_IRUSR= read priviledges to owner of file
+    //S_IWUSR=write priviledges to owner of file
     if (filefd == -1) {
-        perror("open here");
+    	perror("open");
+   	exit(EXIT_FAILURE);
+    }
+    
+    read_return = read(sock, buffer, BUFSIZ);
+    if (read_return == -1) {
+        perror("read");
         exit(EXIT_FAILURE);
     }
-    read_return = read(filefd, buffer,1024);
-    if (read_return == -1) {
-            perror("read");
-            exit(EXIT_FAILURE);
+    if (write(filefd, buffer, read_return) == -1) {
+        perror("write");
+        exit(EXIT_FAILURE);
     }
-    if (write(sock, buffer, read_return) == -1) {
-            perror("write");
-            exit(EXIT_FAILURE);
-     }
-    else {
-        printf("File Sent"); 
+    else { 
+        printf("\nFile received\n");
     }
     close(filefd);
     
