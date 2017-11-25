@@ -112,8 +112,6 @@ int main()
                        rrem[j]=1; //storing remainder too
                 }
             
-            //    cout<<rrem[j];
-                temp[k]=rrem[j];
             }
 		cout<<endl;
         }

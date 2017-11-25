@@ -72,19 +72,18 @@ int main()
 
 void files(int sock) {
 
-    char *file_path = "c.c";
     char buf[1024] = {0};
     int filefd;
-    ssize_t read_return;
-    char buffer[1024];
+    int read_return;
+
     //open file 
     
     printf("Enter file name" );
     scanf("%s",buf);  
-    send(sock , buf ,1024, 0 );
+    send(sock , buf ,1024,0 );
   
     filefd = open(buf,O_WRONLY | O_CREAT | O_TRUNC,S_IRUSR | S_IWUSR);
-    //O_WRONLY = write only 
+    //O_WRONLY = write only /;
     //O_CREAT = create if not existing else open as it is
     // O_TRUNC = clear if exists hence overwrite                    
     //S_IRUSR= read priviledges to owner of file
@@ -94,18 +93,20 @@ void files(int sock) {
    	exit(EXIT_FAILURE);
     }
     
-    read_return = read(sock, buffer, BUFSIZ);
+    read_return = read(sock, buf,1024);
     if (read_return == -1) {
         perror("read");
         exit(EXIT_FAILURE);
     }
-    if (write(filefd, buffer, read_return) == -1) {
+    if (write(filefd, buf, read_return) == -1) {
         perror("write");
         exit(EXIT_FAILURE);
     }
     else { 
         printf("\nFile received\n");
+        system("/home/tanishashrotriya/Documents/root/4socket/client/script.sh");
     }
+ 
     close(filefd);
     
 }

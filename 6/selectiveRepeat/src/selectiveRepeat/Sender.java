@@ -68,6 +68,11 @@ public class Sender {
 				try{
 					ack=din.readInt();
 				
+					if(ack==data.get(0)) {	
+						data.remove(0);
+						count--;
+						System.out.println("Acknowledgement received for "+ack);
+					}
 					if(ack==-1) {
 						System.out.println("Acknowledgement failed and resending packet "+data.get(0));
 						System.out.println("Writing : " + data.get(0));
@@ -78,11 +83,7 @@ public class Sender {
 						System.out.println("Waiting for acknowledgement");
 					}
 					
-					if(ack==data.get(0)) {	
-						data.remove(0);
-						count--;
-						System.out.println("Acknowledgement received for "+ack);
-					}
+					
 				}
 				catch(SocketTimeoutException e) {
 					System.out.println("Waiting for acknowledgemt");

@@ -8,11 +8,8 @@ import java.net.UnknownHostException;
 
 public class client implements Runnable {
 
-  // The client socket
   private static Socket clientSocket = null;
-  // The output stream
   private static PrintStream os = null;
-  // The input stream
   private static DataInputStream is = null;
 
   private static BufferedReader inputLine = null;
@@ -20,17 +17,11 @@ public class client implements Runnable {
   
   public static void main(String[] args) {
 
-    // The default port.
     int portNumber = 2222;
-    // The default host.
     String host = "localhost";
     System.out.println("Usage: java MultiThreadChatClient <host> <portNumber>\n"
               + "Now using host=" + host + ", portNumber=" + portNumber);
     
-
-    /*
-     * Open a socket on a given host and port. Open input and output streams.
-     */
     try {
       clientSocket = new Socket(host, portNumber);
       inputLine = new BufferedReader(new InputStreamReader(System.in));
@@ -43,21 +34,12 @@ public class client implements Runnable {
           + host);
     }
 
-    /*
-     * If everything has been initialized then we want to write some data to the
-     * socket we have opened a connection to on the port portNumber.
-     */
     if (clientSocket != null && os != null && is != null) {
       try {
-
-        /* Create a thread to read from the server. */
         new Thread(new client()).start();
         while (!closed) {
           os.println(inputLine.readLine().trim());
         }
-        /*
-         * Close the output stream, close the input stream, close the socket.
-         */
         os.close();
         is.close();
         clientSocket.close();
@@ -67,16 +49,7 @@ public class client implements Runnable {
     }
   }
 
-  /*
-   * Create a thread to read from the server. (non-Javadoc)
-   * 
-   * @see java.lang.Runnable#run()
-   */
   public void run() {
-    /*
-     * Keep on reading from the socket till we receive "Bye" from the
-     * server. Once we received that then we want to break.
-     */
     String responseLine;
     try {
       while ((responseLine = is.readLine()) != null) {

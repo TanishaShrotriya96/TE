@@ -48,13 +48,13 @@ int main()
 
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(5000);
-  server_addr.sin_addr = *((struct in_addr *)host->h_addr);
-  bzero(&(server_addr.sin_zero),8);
+  server_addr.sin_addr.s_addr = INADDR_ANY;
+ 
   //-----------------socket creation completed--------------
   while (1) {
 
     printf("Type file name (q or Q to quit):");
-    gets(send_data);
+    scanf("%s",send_data);
     if ((strcmp(send_data , "q") == 0) || strcmp(send_data , "Q") == 0)
         break;
     else
@@ -76,7 +76,7 @@ int main()
     //----------------read data to buffer------------------------------------  
 
     socklen_t len = sizeof(server_addr);
-    read_return = recvfrom(sock,buffer,1024,0,(struct sockaddr *)&server_addr, &len);
+    read_return = recvfrom(sock,buffer,1024,0,(struct sockaddr *)&server_addr, (socklen_t *)(sizeof(struct sockaddr)));
     	  
     if (read_return == -1) {
             perror("read");

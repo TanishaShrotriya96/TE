@@ -84,11 +84,9 @@ int main()
 
 void files(int new_socket) {
 
-    char *file_path = "output.tmp";
     char buf[1024]={0};
-    char buffer[1024];
     int filefd;
-    ssize_t read_return;
+    int read_return;
 
     read(new_socket,buf,1024);
     filefd = open(buf, O_RDONLY);
@@ -96,12 +94,12 @@ void files(int new_socket) {
         perror("open here");
         exit(EXIT_FAILURE);
     }
-    read_return = read(filefd, buffer,1024);
+    read_return = read(filefd, buf,1024);
     if (read_return == -1) {
             perror("read");
             exit(EXIT_FAILURE);
     }
-    if (write(new_socket, buffer, read_return) == -1) {
+    if (write(new_socket, buf, read_return) == -1) {
             perror("write");
             exit(EXIT_FAILURE);
      }

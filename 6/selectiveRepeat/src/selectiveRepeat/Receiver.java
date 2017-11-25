@@ -1,5 +1,4 @@
 package selectiveRepeat;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
@@ -53,7 +52,7 @@ public class Receiver {
 	         	window++;
 	        	flag=0;
 	        	
-        		for(Packet x :info) {
+        	    for(Packet x :info) {
         		
         			if(x.failStatus==(-1)) {
         				

@@ -28,8 +28,6 @@ int main()
         server_addr.sin_family = AF_INET;
         server_addr.sin_port = htons(5000);
         server_addr.sin_addr.s_addr = INADDR_ANY;
-        bzero(&(server_addr.sin_zero),8);
-
 
         if (bind(sock,(struct sockaddr *)&server_addr,sizeof(struct sockaddr)) == -1)
         {
@@ -37,28 +35,25 @@ int main()
             exit(1);
         }
 
-        addr_len = sizeof(struct sockaddr);
-	    printf("\nUDPServer Waiting for client on port 5000");
+	printf("\nUDPServer Waiting for client on port 5000");
         fflush(stdout);
 
 //-------------------- Socket creation completed ----------------------------------------------------
 	while (1)
 	{
-        bytes_read = recvfrom(sock,recv_data,1024,0,(struct sockaddr *)&server_addr, &addr_len);
- 	    recv_data[bytes_read] = '\0';
-        printf("\n(%s , %d) said3 : ",inet_ntoa(server_addr.sin_addr),ntohs(server_addr.sin_port));
-        printf("%s", recv_data);
+        bytes_read = recvfrom(sock,recv_data,1024,0,(struct sockaddr *)&server_addr,(socklen_t *)sizeof(struct sockaddr));
+ 	recv_data[bytes_read] = '\0';
+        
+        printf("File to be sent %s", recv_data);
         fflush(stdout);
-         // recv_data=file name that client is asking for.
+        // recv_data=file name that client is asking for.
        
         int filefd;
-        ssize_t read_return;
+        int read_return;
         char buffer[1024];
 	   
-		 //open file 
-	  	filefd = open(recv_data, O_RDONLY);
-        printf("Opened", recv_data);
-   	    fflush(stdout);
+        //open file 
+  	filefd = open(recv_data, O_RDONLY);        
 
     	if (filefd == -1) {
 			perror("open here");
