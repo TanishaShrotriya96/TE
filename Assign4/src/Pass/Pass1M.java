@@ -1,3 +1,4 @@
+package Pass;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.file.Files;
@@ -7,16 +8,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-//missing macro definition MACRO 
-//incomplete macro prototype
-//missing macro end
-//incomplete model statement
 
 public class Pass1M {
 
-	public static final String input="/home/ccoew/3476/SPOS/Assign3/input";
+    String input="/home/ccoew/3476/SPOS/Assign4/src/macro";
+	ArrayList<MacroName> MNT = new ArrayList<MacroName>();
+	ArrayList<Param> PNTAB = new ArrayList<Param>();
+	ArrayList<Param> SSNTAB = new ArrayList<Param>();
+	ArrayList<Param> EVNTAB = new ArrayList<Param>();
+	Map<String,String> KPDTAB = new HashMap<String,String>();
+	ArrayList<Param> MDT = new ArrayList<Param>();	
+	ArrayList<Param> MDT_FINAL = new ArrayList<Param>();	
+	ArrayList<Param> SSTAB = new ArrayList<Param>();	
 	
 	public static void main(String[] args) throws Exception{
+
+			Pass1M p = new Pass1M();	
+			p.Pass1();
+	}
+
+    public void Pass1() throws Exception{
+    	
 		// reading instructions from code 
 		String data = readFileAsString(input);
 		String[] s = data.split("[\\s,]");
@@ -30,17 +42,8 @@ public class Pass1M {
 		    
 	    }
         
-		System.out.println(str.toString());
-        				
+		System.out.println(str.toString());				
 		MacroName macro =new MacroName();
-
-		ArrayList<MacroName> MACRO = new ArrayList<MacroName>();
-		ArrayList<Param> PNTAB = new ArrayList<Param>();
-		ArrayList<Param> SSNTAB = new ArrayList<Param>();
-		ArrayList<Param> EVNTAB = new ArrayList<Param>();
-		
-		Map<String,String> KPDTAB = new HashMap<String,String>();
-		
 		// counters for MNT table
 		int paramCount=1, sSymCount=1, eSymCount=1;
 	    
@@ -57,16 +60,16 @@ public class Pass1M {
 			if(str.get(i).equals("MACRO")){
 				i++;
 				if(macro.name!=null) {
-					MACRO.add(macro);
+					MNT.add(macro);
 
-				//	System.out.println(macro.toString());
+					//System.out.println(macro.toString());
 					macro=new MacroName();
 					macro.name=str.get(i);
 					
 				}
 				else {
 					macro.name=str.get(i);
-				//	System.out.println(macro.toString());
+					//System.out.println(macro.toString());
 					
 					
 				}
@@ -165,18 +168,11 @@ public class Pass1M {
 			
 			// To catch the last macro
 			if(str.get(i).equals("MEND")&&i==str.size()-1) {
-				MACRO.add(macro);
-			//	System.out.println(macro.toString());
+				MNT.add(macro);
+				System.out.println(macro.toString());
 			}
 		}		
-			//System.out.print(PNTAB+"\n");
-			
 	   //Creating MDT and SSTAB
-		
-		ArrayList<Param> MDT = new ArrayList<Param>();	
-		ArrayList<Param> MDT_FINAL = new ArrayList<Param>();	
-		ArrayList<Param> SSTAB = new ArrayList<Param>();	
-		
 		int SSTAB_count=1;
 		int lc=1;
 		BufferedReader br = new BufferedReader(new FileReader(input));
@@ -216,7 +212,7 @@ public class Pass1M {
 		    	
 		    	if(str.get(i).equals("MACRO")) {
 		    		
-		    		for(MacroName m : MACRO) {
+		    		for(MacroName m : MNT) {
 		    			
 		    			if(MDT.get(j+1).name.contains(m.name)) {
 		    				macro=new MacroName();
@@ -401,16 +397,13 @@ public class Pass1M {
 		
 		//Printing MNT
 		System.out.println("MNT -----------");
-		for(MacroName value : MACRO)
+		for(MacroName value : MNT)
 		{
 			System.out.println(value.toString());
 			
 		}
 		System.out.println("-----------------");
-				
-		}
-
-
+    }
 	public static String readFileAsString(String fileName)throws Exception
 	{
 	 String data = "";
