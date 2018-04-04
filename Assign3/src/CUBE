@@ -1,7 +1,0 @@
-	  MACRO 
-      CUBE &P,&CUB
-      MOVER AREG,&P
-      MULT AREG,&P
-      MULT AREG,&P
-      MOVEM AREG,&CUB
-      MEND
