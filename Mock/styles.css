@@ -1,0 +1,19 @@
+<style>
+body {
+    background-color: lightblue;
+    margin:10;
+}
+
+h1 {
+     text-align: center;
+}
+
+div.forms {
+    background-color: lightgrey;
+    width: 300px;
+    border: 25px solid black;
+    padding: 25px;
+    margin: 25px;
+}
+
+</style>

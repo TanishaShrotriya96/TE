@@ -1,0 +1,22 @@
+<?xml version ="1.0"?>
+<xs:schema xmlns:xs="https://www.w3.org/2001/XMLSchema">
+        <xs:element name="CLIENTS" minOccurs="1"/>
+	<xs:element name="CLIENT" type="Cl" minOccurs="1"/>
+	<xs:complexType name="Cl" >
+	<xs:sequence>
+		<xs:element name="NAME" type="xsd:string"  minOccurs="1" maxOccurs="1"/>	
+		<xs:element name="OCCUPATION" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		<xs:element name="HOBBIES" type="Hb"  minOccurs="1" maxOccurs="1"/>
+		<xs:complexType name="Hb">
+		<xs:sequence >
+			<xs:element name="HOBBY" type="Val" minOccurs="1"/>
+			<xs:complexType name="VAl">
+		        <xs:sequence >
+			     <xs:element name="VALUE" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		        </xs:sequence>
+		        </xs:complexType>
+		</xs:sequence>
+		</xs:complexType>
+	</xs:sequence>
+	</xs:complexType>
+</xs:schema>
