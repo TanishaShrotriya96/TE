@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -13,7 +14,18 @@ public class RoundRob implements Schedule {
 
 	@Override
 	public void schedule(Queue<ProcessDetails> p) {
-		// TODO Auto-generated method stub
+		
+		
+		//sorting by arrival if you use random process allocation
+		ArrayList<ProcessDetails> tempr=new ArrayList<ProcessDetails>(p);
+		Collections.sort(tempr,ProcessDetails.byArrival);
+		p.clear();
+		p=new LinkedList<ProcessDetails>(tempr);
+		int pid=1;
+		for(ProcessDetails p1:p) {
+			p1.setPid(pid++);
+		}
+		
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter the time quantum");
 		int quant=sc.nextInt();
@@ -35,22 +47,23 @@ public class RoundRob implements Schedule {
 			for(ProcessDetails pi : p) {
 				
 				//-1 to avoid usage of the finished process again
-				
-				if(pi.getCpuBurst()!=0 &&  pi.getCpuBurst()!=-1) {
+				int currentBurst=pi.getCpuBurst();
+				if(currentBurst>=quant) {
 					String process="P"+pi.getPid();
 					t=t+quant;
 					
 					GnattChart g=new GnattChart(t,process);
 					gnatChart.add(g);
 					
-					pi.setCpuBurst(pi.getCpuBurst()-quant);
+					pi.setCpuBurst(currentBurst-quant);
 
 					System.out.print(g.toString());
 				}
 				//-1 to avoid going in infinite loop
 				
-				if(pi.getCpuBurst()==0 && pi.getCpuBurst()!=-1) {
+				if(pi.getCpuBurst()<quant && pi.getCpuBurst()>=0) {
 					zeroCount++;
+					t=t+pi.getCpuBurst();
 					pi.setCtime(t);
                     pi.setCpuBurst(-1);
 				}
@@ -59,9 +72,10 @@ public class RoundRob implements Schedule {
 		}
 
 		int index=0;
-		// putting back the original value for cpuBurst.
+		// putting back the original value for cpuBurst and setting arrival to zero
 		for(ProcessDetails pi : p) {
 			pi.setCpuBurst(Burst.get(index));
+			pi.setArrTime(0);
             index++;
 		}
 		
@@ -71,9 +85,9 @@ public class RoundRob implements Schedule {
 		Time.avgTurnAround(p);
 		Time.avgWaitTime(p);
 		
-		System.out.println(p.toString());
-		Graphics g = new Graphics();
-		g.buildChart(gnatChart);
+		System.out.println("\n"+p.toString());
+		//Graphics g = new Graphics();
+		//g.buildChart(gnatChart);
 		
 	}
 

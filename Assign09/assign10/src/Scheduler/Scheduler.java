@@ -50,8 +50,8 @@ public class Scheduler {
 			        }
 			        else {
 				        Random rand = new Random();
-			            arrTime  = rand.nextInt(25);
-			            cpuBurst = rand.nextInt(25);
+			            arrTime  = rand.nextInt(15);
+			            cpuBurst = rand.nextInt(10)+1;
 			        }
 			        break;
 		            

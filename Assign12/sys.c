@@ -16,7 +16,7 @@ pid_t pid;
 int ret_val,ret_code;
 var = 88;	//We don't flush stdio.h
 char *args[] = {"cal","12","2011",NULL}; //for execv case 5 and 7
-char *ptr = "HOME=/usr/home";
+char *ptr = "NEW=/home/tanishashrotriya/Documents/SPOS/Assign12";
 int ret;
 do{
 printf("\n*************** MENU ***************\n");
@@ -99,9 +99,9 @@ scanf("%d",&choice);
 					printf("\n\tReached here !");	
 			break;	
 		case 8:
-			printf("\n\tBefore getenv : %d\tputenv : %d",getenv(),putenv());
+			printf("\n\tBefore getenv : %s\tputenv : %d",getenv("NEW"),putenv());
 			ret = putenv(ptr);
-			printf("\n\tAfter getenv : %d\tputenv : %d",getenv(),ret);
+			printf("\n\tAfter getenv : %s\tputenv : %d",getenv("NEW"),ret);
 			break;
 		default:
 			printf("\nEnter valid choice !");

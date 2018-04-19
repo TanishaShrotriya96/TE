@@ -1,41 +1,24 @@
 %{
 #include<stdio.h>
 %}
-quotes  [""]
 
-// make a few more changes
 %%
 
-"public static void main(String args[])" {printf("\nThis is a System function := %s",yytext);}
-"public" {printf("\n:This is a reserved keyword := %s",yytext);}
-"class" {printf("\n:This is a reserved keyword := %s",yytext);}
+"public static void main(String args[])" {printf("\n%s := This is a System function ",yytext);}
+"public" {printf("\n:%s := This is a reserved keyword",yytext);}
+"class" {printf("\n:%s := This is a reserved keyword ",yytext);}
 
 
 int|float|double {printf("\n:The data type := %s",yytext);}
-"try"[\n]"{"|"catch(Exception e)"[\n]"{"[\n]"e.printStackTrace()"[\n]"}" {printf("\n:This is a try catch block%s",yytext);}
+"try"[ \n]"{"|"catch(Exception e)"[\n]"{"[\n]"e.printStackTrace()"[\n]"}" {printf("\n:This is a try catch block%s",yytext);}
 "+"|"="|"/"|"*" {printf("\nOperator is a := %s",yytext);}
-[A-Za-z]*[0-9]* {printf("\nVariable is a := %s",yytext);}
+int|float|double[A-Za-z]*[0-9]* {printf("\n Variable is a :=%s",yytext);}
 "{"|"}"|"("|")" {printf("\nSymbol or bracket is a := %s",yytext);}
 "System.out.println(\"".*"\")" {printf("\nThis is a system function := %s",yytext);}
 %% 
-main(argc,argv)
-int argc;
-char **argv;
-{
-	if(argc>1)
-	{
-		FILE *file;
-		file=fopen(argv[1],"r");
-		if(!file){
-		fprintf(stderr,"could not open %s\n",argv[1]);
-		exit(1);
-		}
-	yyin=file;
-	}
-
-
-yylex();
-
+main() {
+ yylex();
+ return 0;
 }
 int yywrap()
 {
