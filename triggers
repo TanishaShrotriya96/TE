@@ -1,0 +1,55 @@
+
+delimiter //
+create trigger one
+after insert on stud
+for each row 
+begin
+insert into auditStud values(new.roll,new.name,"one_inserted",now()) ;
+end //
+delimiter ;
+
+delimiter //
+create trigger two
+before insert on stud
+for each row 
+begin
+insert into auditStud values(new.roll,new.name,"two_inserted",now()) ;
+end //
+delimiter ;
+
+delimiter //
+create trigger three
+before update on stud
+for each row 
+begin
+set new.name=UPPER(new.name);
+insert into auditStud values(old.roll,new.name,"three_updated",now()) ;
+end //
+delimiter ;
+
+delimiter //
+create trigger four
+after update on stud
+for each row 
+begin
+insert into auditStud values(old.roll,new.name,"four_updated",now()) ;
+end //
+delimiter ;
+
+delimiter //
+create trigger five
+before delete on stud
+for each row 
+begin
+insert into auditStud values(old.roll,old.name,"five_deleted",now()) ;
+end //
+delimiter ;
+
+delimiter //
+create trigger six
+after delete on stud
+for each row 
+begin
+insert into auditStud values(old.roll,old.name,"six_deleted",now()) ;
+end //
+delimiter ;

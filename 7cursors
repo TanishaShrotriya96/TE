@@ -1,0 +1,84 @@
+
+mysql> select * from student;
++--------+-----------+-------+----------+-------+
+| RollNo | Sname     | class | dept     | marks |
++--------+-----------+-------+----------+-------+
+|      1 | Asmita    | NULL  | Computer |   500 |
+|      2 | Megha     | NULL  | Computer |   200 |
+|      3 | Pooja     | NULL  | Computer |   400 |
+|      4 | Trupti    | NULL  | Computer |   760 |
+|      5 | Shubhangi | NULL  | Computer |   860 |
++--------+-----------+-------+----------+-------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> delimiter //
+mysql> create procedure cur()
+    -> begin
+    -> declare mrks int;
+    -> declare no int;
+    -> declare done int default 0;
+    -> declare c1 cursor for select RollNo,marks from student;
+    -> 
+    -> DECLARE CONTINUE HANDLER FOR NOT FOUND set done=1;
+    -> 
+    -> open c1;
+    -> 
+    -> L1:loop
+    -> fetch c1 into no,mrks;
+    -> 
+    -> if done =1 then 
+    ->   leave L1;
+    -> end if;
+    -> 
+    -> if mrks<900 and mrks>=700 then
+    -> update student set class='DISTINC' where RollNo=no;
+    -> end if;
+    -> 
+    -> if mrks<700 and mrks>=600 then
+    -> update student set class='FIRST' where RollNo=no;
+    -> end if;
+    -> 
+    -> if mrks<600 and mrks>=500 then
+    -> update student set class='HISEC' where RollNo=no;
+    -> end if;
+    -> 
+    -> if mrks<500 and mrks>=400 then
+    -> update student set class='SECOND' where RollNo=no;
+    -> end if;
+    -> 
+    -> if mrks<400 then
+    -> update student set class='FAIL' where RollNo=no;
+    -> end if;
+    -> 
+    -> end loop L1;
+    -> close c1;
+    -> select'successfull update';
+    -> 
+    -> end //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call cur();
++--------------------+
+| successfull update |
++--------------------+
+| successfull update |
++--------------------+
+1 row in set (0.20 sec)
+
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> select * from student;
++--------+-----------+---------+----------+-------+
+| RollNo | Sname     | class   | dept     | marks |
++--------+-----------+---------+----------+-------+
+|      1 | Asmita    | HISEC   | Computer |   500 |
+|      2 | Megha     | FAIL    | Computer |   200 |
+|      3 | Pooja     | SECOND  | Computer |   400 |
+|      4 | Trupti    | DISTINC | Computer |   760 |
+|      5 | Shubhangi | DISTINC | Computer |   860 |
++--------+-----------+---------+----------+-------+
+5 rows in set (0.00 sec)
+

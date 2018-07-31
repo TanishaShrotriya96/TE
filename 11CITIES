@@ -1,0 +1,317 @@
+ASSIGNMENT 11
+3476
+
+1.Create collection cities and insert values.
+> db.createCollection("cities")
+> db.cities.insert([{ "_id" : "99767", "city" : "RAMPART", "loc" : [ -150.011201, 65.383627 ], "pop" : 68, "state" : "AK" },
+... { "_id" : "99768", "city" : "RUBY", "loc" : [ -155.503872, 64.720062 ], "pop" : 172, "state" : "AK" },
+... { "_id" : "99769", "city" : "SAVOONGA", "loc" : [ -170.470908, 63.679737 ], "pop" : 519, "state" : "AK" },
+... { "_id" : "99770", "city" : "SELAWIK", "loc" : [ -158.534287, 65.713537 ], "pop" : 0, "state" : "AK" },
+... { "_id" : "99771", "city" : "SHAKTOOLIK", "loc" : [ -161.174589, 64.37549799999999 ], "pop" : 183, "state" : "AK" },
+... { "_id" : "99772", "city" : "SHISHMAREF", "loc" : [ -166.137276, 66.23056200000001 ], "pop" : 456, "state" : "AK" }])
+BulkWriteResult({
+	"writeErrors" : [ ],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 6,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+
+2.display records 
+> db.cities.find({state:"VA"})
+{ "_id" : "22001", "city" : "ALDIE", "loc" : [ -77.602281, 38.957878 ], "pop" : 1574, "state" : "VA" }
+{ "_id" : "22002", "city" : "AMISSVILLE", "loc" : [ -78.038053, 38.710055 ], "pop" : 1581, "state" : "VA" }
+{ "_id" : "22003", "city" : "ANNANDALE", "loc" : [ -77.214245, 38.830699 ], "pop" : 50054, "state" : "VA" }
+{ "_id" : "22010", "city" : "ARCOLA", "loc" : [ -77.538721, 38.973626 ], "pop" : 61, "state" : "VA" }
+{ "_id" : "22011", "city" : "ASHBURN", "loc" : [ -77.480612, 39.039918 ], "pop" : 3979, "state" : "VA" }
+> db.cities.count()
+402
+
+3.update data of one state
+> db.cities.update({state:"ME"},{$set : {country:"USA"}} ,{multi:true})
+WriteResult({ "nMatched" : 51, "nUpserted" : 0, "nModified" : 51 })
+> db.cities.find({state:"MD"});
+{ "_id" : "04008", "city" : "BOWDOINHAM", "loc" : [ -69.918849, 44.036806 ], "pop" : 4328, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+{ "_id" : "04009", "city" : "BRIDGTON", "loc" : [ -70.724081, 44.052049 ], "pop" : 3980, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+{ "_id" : "04010", "city" : "BROWNFIELD", "loc" : [ -70.903225, 43.971316 ], "pop" : 1148, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+{ "_id" : "04011", "city" : "BIRCH ISLAND", "loc" : [ -69.955469, 43.897591 ], "pop" : 22557, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+{ "_id" : "04013", "city" : "BUSTINS ISLAND", "loc" : [ -70.042247, 43.79602 ], "pop" : 0, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+{ "_id" : "04015", "city" : "CASCO", "loc" : [ -70.526013, 43.959623 ], "pop" : 3010, "state" : "ME", "country" : "USA", "time" : ISODate("2017-08-28T05:34:34.027Z") }
+Type "it" for more
+
+4.increase population of each city in state NH by 5000
+
+Inital : 
+> db.cities.find({$and : [{state:"NH"},{city:"FREMONT"}]}).pretty();
+{
+	"_id" : "03044",
+	"city" : "FREMONT",
+	"loc" : [
+		-71.121836,
+		42.984016
+	],
+	"pop" : 2677,
+	"state" : "NH",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+
+> db.cities.update({state:"NH"},{$inc : {pop:5000}} ,{multi:true})
+WriteResult({ "nMatched" : 10, "nUpserted" : 0, "nModified" : 10 })
+> db.cities.find({$and : [{state:"NH"},{city:"FREMONT"}]}).pretty();
+{
+	"_id" : "03044",
+	"city" : "FREMONT",
+	"loc" : [
+		-71.121836,
+		42.984016
+	],
+	"pop" : 7677,
+	"state" : "NH",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+5.decrease population of MD by 10000
+
+//initial
+> db.cities.find({$and : [{city:"SAINT CHARLES"},{state:"MD"}]}).pretty();
+{
+	"_id" : "20602",
+	"city" : "SAINT CHARLES",
+	"loc" : [
+		-76.903414,
+		38.601545
+	],
+	"pop" : 20662,
+	"state" : "MD",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+
+
+> db.cities.update({state:"MD"},{$inc : {pop:-10000}} ,{multi:true})
+WriteResult({ "nMatched" : 22, "nUpserted" : 0, "nModified" : 22 })
+> db.cities.find({$and : [{city:"SAINT CHARLES"},{state:"MD"}]}).pretty();
+
+{
+	"_id" : "20602",
+	"city" : "SAINT CHARLES",
+	"loc" : [
+		-76.903414,
+		38.601545
+	],
+	"pop" : 10662,
+	"state" : "MD",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+
+6.delete the document of "CLEMENT" from NH
+
+> db.cities.remove({$and : [{state:"NH"},{city:"CLEMENT"}]});
+WriteResult({ "nRemoved" : 0 })
+> db.cities.find({$and : [{state:"NH"},{city:"CLEMENT"}]});
+
+7.display all cities with population more than 10,000
+
+> db.cities.find({pop : {$gt:10000}}).pretty().limit(3);
+{
+	"_id" : "01001",
+	"city" : "AGAWAM",
+	"loc" : [
+		-72.622739,
+		42.070206
+	],
+	"pop" : 15338,
+	"state" : "MA",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+{
+	"_id" : "01002",
+	"city" : "CUSHMAN",
+	"loc" : [
+		-72.51565,
+		42.377017
+	],
+	"pop" : 36963,
+	"state" : "MA",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+{
+	"_id" : "01007",
+	"city" : "BELCHERTOWN",
+	"loc" : [
+		-72.410953,
+		42.275103
+	],
+	"pop" : 10579,
+	"state" : "MA",
+	"country" : "null",
+	"time" : ISODate("2017-08-28T05:34:34.027Z")
+}
+
+8.display all cities in NY with a population greater than 5000
+
+> db.cities.find({$and : [{state:"NY"},{pop : {$gt:10000}}]},{city:1,state:1,pop:1}).pretty().limit(5);
+{ "_id" : "10001", "city" : "NEW YORK", "pop" : 18913, "state" : "NY" }
+{ "_id" : "10002", "city" : "NEW YORK", "pop" : 84143, "state" : "NY" }
+{ "_id" : "10003", "city" : "NEW YORK", "pop" : 51224, "state" : "NY" }
+{ "_id" : "10009", "city" : "NEW YORK", "pop" : 57426, "state" : "NY" }
+{ "_id" : "10010", "city" : "NEW YORK", "pop" : 24907, "state" : "NY" }
+
+9.display all cities having names starting with M
+
+> db.cities.find({city:/^C/},{state:1,city:1}).limit(10)
+{ "_id" : "02804", "city" : "CLEMENT", "state" : "NH" }
+{ "_id" : "02813", "city" : "CHARLESTOWN", "state" : "RI" }
+{ "_id" : "02814", "city" : "CHEPACHET", "state" : "RI" }
+{ "_id" : "02815", "city" : "CLAYVILLE", "state" : "RI" }
+{ "_id" : "02816", "city" : "COVENTRY", "state" : "RI" }
+{ "_id" : "03034", "city" : "CANDIA", "state" : "NH" }
+{ "_id" : "03036", "city" : "CHESTER", "state" : "NH" }
+{ "_id" : "03902", "city" : "CAPE NEDDICK", "state" : "ME" }
+{ "_id" : "06018", "city" : "CANAAN", "state" : "CT" }
+{ "_id" : "06019", "city" : "CANTON", "state" : "CT" }
+
+
+10. Display only the city name and population of cities, with population < 1000
+
+> db.cities.find({pop:{$lt:1000}},{city:1,pop:1}).limit(10)
+{ "_id" : "02807", "city" : "BLOCK ISLAND", "pop" : 836 }
+{ "_id" : "02815", "city" : "CLAYVILLE", "pop" : 45 }
+{ "_id" : "03902", "city" : "CAPE NEDDICK", "pop" : 953 }
+{ "_id" : "03907", "city" : "OGUNQUIT", "pop" : 852 }
+{ "_id" : "04001", "city" : "ACTON", "pop" : 767 }
+{ "_id" : "06020", "city" : "CANTON CENTER", "pop" : 192 }
+{ "_id" : "06021", "city" : "COLEBROOK", "pop" : 203 }
+
+11. Display all cities in ascending order of population 
+
+> db.cities.find({},{city:1,pop:1}).sort({pop:1}).limit(10)
+{ "_id" : "02815", "city" : "CLAYVILLE", "pop" : 45 }
+{ "_id" : "06020", "city" : "CANTON CENTER", "pop" : 192 }
+{ "_id" : "06021", "city" : "COLEBROOK", "pop" : 203 }
+{ "_id" : "04001", "city" : "ACTON", "pop" : 767 }
+{ "_id" : "02807", "city" : "BLOCK ISLAND", "pop" : 836 }
+{ "_id" : "03907", "city" : "OGUNQUIT", "pop" : 852 }
+{ "_id" : "03902", "city" : "CAPE NEDDICK", "pop" : 953 }
+{ "_id" : "02812", "city" : "RICHMOND", "pop" : 1011 }
+{ "_id" : "03043", "city" : "FRANCESTOWN", "pop" : 1219 }
+{ "_id" : "02808", "city" : "BRADFORD", "pop" : 2184 }
+
+12. List all cities that lie between longitude 10 and 30
+
+//comparison by index 
+
+> db.cities.find({"loc.1":{$gt:10}},{loc:1}).limit(10);
+{ "_id" : "01001", "loc" : [ -72.622739, 42.070206 ] }
+{ "_id" : "01002", "loc" : [ -72.51565, 42.377017 ] }
+{ "_id" : "01005", "loc" : [ -72.108354, 42.409698 ] }
+{ "_id" : "01007", "loc" : [ -72.410953, 42.275103 ] }
+{ "_id" : "01008", "loc" : [ -72.936114, 42.182949 ] }
+{ "_id" : "01028", "loc" : [ -72.505565, 42.067203 ] }
+{ "_id" : "01262", "loc" : [ -73.322263, 42.30104 ] }
+{ "_id" : "01266", "loc" : [ -73.38251, 42.334752 ] }
+{ "_id" : "01267", "loc" : [ -73.20364, 42.708883 ] }
+{ "_id" : "01270", "loc" : [ -73.04661, 42.509494 ] }
+
+> db.cities.find({"loc.0":{$gt:-80,$lt:42.5}},{loc:1}).limit(10);
+{ "_id" : "01001", "loc" : [ -72.622739, 42.070206 ] }
+{ "_id" : "01002", "loc" : [ -72.51565, 42.377017 ] }
+{ "_id" : "01005", "loc" : [ -72.108354, 42.409698 ] }
+{ "_id" : "01007", "loc" : [ -72.410953, 42.275103 ] }
+{ "_id" : "01008", "loc" : [ -72.936114, 42.182949 ] }
+{ "_id" : "01028", "loc" : [ -72.505565, 42.067203 ] }
+{ "_id" : "01262", "loc" : [ -73.322263, 42.30104 ] }
+{ "_id" : "01266", "loc" : [ -73.38251, 42.334752 ] }
+{ "_id" : "01267", "loc" : [ -73.20364, 42.708883 ] }
+{ "_id" : "01270", "loc" : [ -73.04661, 42.509494 ] }
+
+// compare all elements in array and show documents with one match atleast.
+> db.cities.find({"loc":{$gt:10}},{loc:1}).limit(10);
+{ "_id" : "01001", "loc" : [ -72.622739, 42.070206 ] }
+{ "_id" : "01002", "loc" : [ -72.51565, 42.377017 ] }
+{ "_id" : "01005", "loc" : [ -72.108354, 42.409698 ] }
+{ "_id" : "01007", "loc" : [ -72.410953, 42.275103 ] }
+{ "_id" : "01008", "loc" : [ -72.936114, 42.182949 ] }
+{ "_id" : "01028", "loc" : [ -72.505565, 42.067203 ] }
+{ "_id" : "01262", "loc" : [ -73.322263, 42.30104 ] }
+{ "_id" : "01266", "loc" : [ -73.38251, 42.334752 ] }
+{ "_id" : "01267", "loc" : [ -73.20364, 42.708883 ] }
+{ "_id" : "01270", "loc" : [ -73.04661, 42.509494 ] }
+
+
+13. List all cities which have belong to "NH" and have population less than 9000
+
+> db.cities.find({$and:[{pop:{$lt:9000}},{state:"NH"}]},{city:1,state:1,pop:1}).limit(20)
+{ "_id" : "03031", "city" : "AMHERST", "pop" : 8998, "state" : "NH" }
+{ "_id" : "03032", "city" : "AUBURN", "pop" : 4085, "state" : "NH" }
+{ "_id" : "03033", "city" : "BROOKLINE", "pop" : 2410, "state" : "NH" }
+{ "_id" : "03034", "city" : "CANDIA", "pop" : 3557, "state" : "NH" }
+{ "_id" : "03036", "city" : "CHESTER", "pop" : 2691, "state" : "NH" }
+{ "_id" : "03037", "city" : "DEERFIELD", "pop" : 3124, "state" : "NH" }
+{ "_id" : "03042", "city" : "EPPING", "pop" : 6797, "state" : "NH" }
+{ "_id" : "03043", "city" : "FRANCESTOWN", "pop" : 1219, "state" : "NH" }
+{ "_id" : "03044", "city" : "FREMONT", "pop" : 2677, "state" : "NH" }
+
+13b. List all cities which have belong to "NH" or have population less than 9000
+
+> db.cities.find({$or:[{pop:{$lt:9000}},{state:"NH"}]},{city:1,state:1,pop:1}).limit(20)
+{ "_id" : "02804", "city" : "CLEMENT", "pop" : 2000, "state" : "NH" }
+{ "_id" : "02807", "city" : "BLOCK ISLAND", "pop" : 836, "state" : "RI" }
+{ "_id" : "02808", "city" : "BRADFORD", "pop" : 2184, "state" : "RI" }
+{ "_id" : "02812", "city" : "RICHMOND", "pop" : 1011, "state" : "RI" }
+{ "_id" : "02813", "city" : "CHARLESTOWN", "pop" : 6663, "state" : "RI" }
+{ "_id" : "02814", "city" : "CHEPACHET", "pop" : 8191, "state" : "RI" }
+{ "_id" : "02815", "city" : "CLAYVILLE", "pop" : 45, "state" : "RI" }
+{ "_id" : "03031", "city" : "AMHERST", "pop" : 8998, "state" : "NH" }
+{ "_id" : "03032", "city" : "AUBURN", "pop" : 4085, "state" : "NH" }
+{ "_id" : "03033", "city" : "BROOKLINE", "pop" : 2410, "state" : "NH" }
+{ "_id" : "03034", "city" : "CANDIA", "pop" : 3557, "state" : "NH" }
+{ "_id" : "03036", "city" : "CHESTER", "pop" : 2691, "state" : "NH" }
+{ "_id" : "03037", "city" : "DEERFIELD", "pop" : 3124, "state" : "NH" }
+{ "_id" : "03038", "city" : "DERRY", "pop" : 29556, "state" : "NH" }
+{ "_id" : "03042", "city" : "EPPING", "pop" : 6797, "state" : "NH" }
+{ "_id" : "03043", "city" : "FRANCESTOWN", "pop" : 1219, "state" : "NH" }
+{ "_id" : "03044", "city" : "FREMONT", "pop" : 2677, "state" : "NH" }
+{ "_id" : "03901", "city" : "BERWICK", "pop" : 5942, "state" : "ME" }
+{ "_id" : "03902", "city" : "CAPE NEDDICK", "pop" : 953, "state" : "ME" }
+{ "_id" : "03903", "city" : "ELIOT", "pop" : 6506, "state" : "ME" }
+
+
+14. List all cities with population between 5,000 to 10,000
+
+> db.cities.find({pop: {$gt:5000,$lt:10000}},{city:1,pop:1}).limit(20)
+{ "_id" : "02813", "city" : "CHARLESTOWN", "pop" : 6663 }
+{ "_id" : "02814", "city" : "CHEPACHET", "pop" : 8191 }
+{ "_id" : "03031", "city" : "AMHERST", "pop" : 8998 }
+{ "_id" : "03042", "city" : "EPPING", "pop" : 6797 }
+{ "_id" : "03901", "city" : "BERWICK", "pop" : 5942 }
+{ "_id" : "03903", "city" : "ELIOT", "pop" : 6506 }
+{ "_id" : "03906", "city" : "NORTH BERWICK", "pop" : 6465 }
+{ "_id" : "03908", "city" : "SOUTH BERWICK", "pop" : 5982 }
+{ "_id" : "03909", "city" : "YORK", "pop" : 8477 }
+{ "_id" : "06013", "city" : "BURLINGTON", "pop" : 7017 }
+{ "_id" : "06016", "city" : "WINDSORVILLE", "pop" : 5067 }
+{ "_id" : "07004", "city" : "FAIRFIELD", "pop" : 7567 }
+
+15.Make appropriate use of save()
+
+If a document does not exist with the specified _id value, the save() method performs an insert with the specified fields in the document.
+
+If a document exists with the specified _id value, the save() method performs an update, replacing all field in the existing record with the fields from the document.
+
+> db.cities.find().limit(1)
+{ "_id" : "02804", "city" : "ASHAWAY", "loc" : [ -71.783745, 41.423054 ], "pop" : 2472, "state" : "RI" }
+
+> db.cities.save({"_id" : "02804", "city" : "CLEMENT", "loc" : [ -71.783745, 41.423054 ], "pop" : 2000, "state" : "NH"})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.cities.find().limit(1)
+{ "_id" : "02804", "city" : "CLEMENT", "loc" : [ -71.783745, 41.423054 ], "pop" : 2000, "state" : "NH" }
+
