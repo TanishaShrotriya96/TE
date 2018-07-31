@@ -1,0 +1,30 @@
+Command to find JDK path :- readlink -f $(which java)
+
+ [root@localhost ccoew]# cd 3476
+[root@localhost 3476]# ls
+[root@localhost 3476]# gedit JNITest.java
+[root@localhost 3476]# javac JNITest.java
+[root@localhost 3476]# javah JNITest
+[root@localhost 3476]# gedit jnitest.cpp
+[root@localhost 3476]# g++ -fPIC -shared -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-7.b14.fc24.x86_64/include  -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-7.b14.fc24.x86_64/include/linux -I/home/ccoew/3476/ -o /home/ccoew/3476/mynativelib.so /home/ccoew/3476/jnitest.cpp
+
+[root@localhost 3476]# java -Djava.library.path=/home/ccoew/3476 JNITest
+
+...Welcome to the world of JNI...
+
+[root@localhost 3476]# gedit AddJNI.java
+
+
+[root@localhost 3476]# javac AddJNI.java
+[root@localhost 3476]# javah AddJNI
+ [root@localhost 3476]# gedit AddJNI.cpp
+
+
+ [root@localhost 3476]# g++ -fPIC -shared -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-7.b14.fc24.x86_64/include  -I/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.91-7.b14.fc24.x86_64/include/linux -I/home/ccoew/3476/ -o /home/ccoew/3476/mynativelib.so /home/ccoew/3476/AddJNI.cpp
+
+[root@localhost 3476]# java -Djava.library.path=/home/ccoew/3476 AddJNI
+Addition is=120
+
+[root@localhost 3476]# 
+
+

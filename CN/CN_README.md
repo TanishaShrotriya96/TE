@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ComputerNetworks 
 Third Year Computer Networks Lab Assignments
 
@@ -23,15 +22,3 @@ Assignment 8 - UDP client server chat in Java.
 Assignment 9 - Packet sniffing code in python.
 
 Assignment 10 - DNS sniffer code in python.
-=======
-# SPOS
-### Contains Assignments from Systems Programming and Operating Systems Lab.
-Assign0 - practice project on regex and file handling in java
-
-Assign1 - Pass1 of 2Pass Assembler 
-
-[GO TO WIKI FOR ALGORITHM](https://github.com/TanishaShrotriya/SPOS/wiki)
-
-
-  
->>>>>>> SPOS/master

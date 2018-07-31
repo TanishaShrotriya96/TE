@@ -1,0 +1,7 @@
+INDEX VERSION 1.130+/home/tanishashrotriya/Documents/SPOS/.metadata/.plugins/org.eclipse.jdt.core
+2846797977.index
+928674191.index
+1169220510.index
+2351740893.index
+2899527339.index
+1730693010.index
