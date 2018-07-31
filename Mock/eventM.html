@@ -1,0 +1,70 @@
+<!--DOCTYPE html-->
+
+<html>
+<head>
+
+  <link rel="stylesheet" href="styles.css">
+<body>
+
+<h1>Welcome to Cummins College of Engineering for Women,Pune Event Registrations</h1>
+
+<div class="forms"><form id="info">
+Enter information :<br><br>
+Name  <br><input type = "text" name="Name" required ><br><br>
+Division  <br> <input type = "text" name="Div" ><br><br>
+Email <br> <input type = "text" name="email" ><br><br>
+Phone <br><input type = "number" name="Phone"><br><br>
+<input type ="radio" name="Type" value="First Year" >First Year<br>
+<input type ="radio" name="Type" value="Second Year" >Second Year<br>
+<input type ="radio" name="Type" value="Third Year" >Third Year<br><br>
+<input type ="submit" value="Submit" onclick="myFunction()">
+<!--Validate-->
+</form></div>
+
+
+<script>
+  function myFunction() {
+    var val=String(document.getElementById("info").email.value);
+
+    if(val.indexOf("@")<1 ||val.indexOf(".")>val.length-1) {
+     if(val.length==0) {
+       alert("Email field incomplete")
+      }
+      else {
+       alert("Email format incorrect")
+      }
+    }
+
+    var val=String(document.getElementById("info").Phone.value);
+   
+    if(val.length<10) {
+
+      if(val.length==0) {
+       alert("Phone field left empty, phone number is mandatory")
+      }
+      else {
+       alert("Number of digits entered is incorrect")
+      }
+    }
+
+    var val=String(document.getElementById("info").Name.value);
+    
+    if(val.length==0) {
+     alert("Name field incomplete");
+    }
+     var val=String(document.getElementById("info").Div.value);
+    if(val.length==0) {
+     alert("Division field incomplete");
+    }
+     
+    var val=String(document.getElementById("info").Type.value);
+    if(val==null) {
+     alert("Enter your year please");
+    }
+    return;
+}
+</script>
+
+</body>
+</html>
+

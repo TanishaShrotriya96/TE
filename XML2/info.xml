@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="info.xsl"?>
+<CLIENTS xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="info.xsd">
+<CLIENT>
+<NAME>Tanisha</NAME>
+<OCCUPATION>Engineer</OCCUPATION>
+<HOBBIES>
+<HOBBY>
+ <VALUE>Music</VALUE>
+</HOBBY>
+<HOBBY>
+ <VALUE>Sketching</VALUE>
+</HOBBY>
+<HOBBY>
+ <VALUE>Dancing</VALUE>
+</HOBBY>
+</HOBBIES>
+</CLIENT>
+
+<CLIENT>
+<NAME>Shubhangi</NAME>
+<OCCUPATION>Engineer</OCCUPATION>
+<HOBBIES>
+<HOBBY>
+ <VALUE>Music</VALUE>
+</HOBBY>
+<HOBBY>
+ <VALUE>Cooking</VALUE>
+</HOBBY>
+</HOBBIES>
+</CLIENT>
+
+<CLIENT>
+<NAME>Pooja</NAME>
+<OCCUPATION>Dancer</OCCUPATION>
+<HOBBIES>
+<HOBBY>
+ <VALUE>Dance</VALUE>
+</HOBBY>
+<HOBBY>
+ <VALUE>Music</VALUE>
+</HOBBY>
+<HOBBY>
+ <VALUE>Math</VALUE>
+</HOBBY>
+</HOBBIES>
+</CLIENT>
+</CLIENTS>

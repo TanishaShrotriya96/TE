@@ -1,0 +1,92 @@
+<!--DOCTYPE html-->
+
+<html>
+<head>
+
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="note.xml">Commitee</a></li>
+   <li><a href="eventD.html">Events</a></li>
+  <li><a href="calender.html">Calender</a></li>
+
+</ul>
+
+<h2>Welcome to Cummins College of Engineering for Women,Pune ACM Registrations</h2>
+
+<p> Enter your details here </p>
+
+<div class="forms"><form id="info" action= "test" method="GET">
+Enter information :<br><br>
+Name <input type = "text" name="Name" required ><br><br>
+Div <input type = "text" name="Div" ><br><br>
+Email <input type = "text" name="email" ><br><br>
+Phone <input type = "number" name="Phone"><br><br>
+<input type ="radio" name="Type" value="First Year" >First Year<br>
+<input type ="radio" name="Type" value="Second Year" >Second Year<br>
+<input type ="radio" name="Type" value="Third Year" >Third Year<br><br>
+<input type ="submit" value="Submit" onclick="myFunction()">
+<!--Validate-->
+</form></div>
+
+<script type="text/javascript">
+  function myFunction() {
+    var val=String(document.getElementById("info").email.value);
+
+    if(val.indexOf("@")<1 ||val.indexOf(".")>val.length-1) {
+     alert("Email error");
+    }
+
+    var val=String(document.getElementById("info").Phone.value);
+    if(val.length<10) {
+     alert("Phone error");
+    }
+
+     var val=String(document.getElementById("info").Name.value);
+    if(val.length==0) {
+     alert("Name field incomplete");
+    }
+     var val=String(document.getElementById("info").Div.value);
+    if(val.length==0) {
+     alert("Division field incomplete");
+    }
+     var val=String(document.getElementById("info").Type.value);
+    if(val==null) {
+     alert("Enter your year please");
+    }
+
+//(/.*@.*\..*/);
+    return;
+}
+</script>
+
+
+<div class="gallery">
+  <a target="_blank" href="acm2.jpg">
+    <img src="acm2.jpg" alt="Let's Code" width="500" height="500">
+  </a>
+  <div class="desc">And many more community activities</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="acm3.jpg">
+    <img src="acm3.jpg" alt="Let's Code" width="500" height="500">
+  </a>
+  <div class="desc">Organize an hour of code </div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="acmSS.jpg">
+    <img src="acmSS.jpg" alt="Let's Code" width="500" height="500">
+  </a>
+  <div class="desc">Have a thrilling experience at one of the Summer Schools!!</div>
+</div>
+
+
+</body>
+</html>
+
