@@ -1,0 +1,130 @@
+Instructions to run both the codes ie SelectiveRepeat and GoBackN  : 
+Receiver.java runs first in one terminal
+Sender.java runs next in a different terminal 
+
+The codes are written in eclipse IDE, so in that case Receiver.java runs on one console instance and Sender.java on the second instance
+
+Go Back N :
+
+The code here for Go Back N implementation is based on the logic explained in the youtube video tutorial -
+
+https://www.youtube.com/watch?v=qnutENivC14&t=639s
+
+Selective Repeat is a further modification of the same code above.
+
+/*==========================================================================================
+
+OUTPUT FOR GoBackN:
+
+Enter the frame size
+10
+Enter the window size
+4
+Enter the failure size
+6
+Enter the next packet
+1
+Waiting for acknowledgement
+Enter the next packet
+2
+Waiting for acknowledgement
+Enter the next packet
+3
+Waiting for acknowledgement
+Enter the next packet
+4
+Acknowledgement received for 1
+Enter the next packet
+5
+Acknowledgement received for 2
+Enter the next packet
+6
+Acknowledgement received for 3
+Enter the next packet
+7
+Acknowledgement received for 4
+Enter the next packet
+8
+Acknowledgement received for 5
+Enter the next packet
+9
+Acknowledgement failed and resending packets [6, 7, 8, 9]
+Enter the next packet
+10
+Waiting for acknowledgement
+Waiting for acknowledgement
+Waiting for acknowledgement
+Acknowledgement received for 6
+Acknowledgement received for 7
+Acknowledgement failed and resending packets [8, 9, 10, -2, -2, -2, -2, -2]
+Waiting for acknowledgement
+Waiting for acknowledgement
+Waiting for acknowledgement
+Acknowledgement received for 8
+Acknowledgement received for 9
+Acknowledgement received for 10
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 6, 7, 8, 9, 10, -2, 8, 9, 10, -2, -2, -2]
+Total packets sent after packet failures : 17
+
+// -2 value represents a time gap.
+
+======================================================================================================
+OUTPUT for Selective Repeat : 
+
+Enter the frame size
+10
+Enter the window size
+4
+Enter the failure size
+6
+Enter the next packet
+1
+Waiting for acknowledgement
+Enter the next packet
+2
+Waiting for acknowledgement
+Enter the next packet
+3
+Waiting for acknowledgement
+Enter the next packet
+4
+Acknowledgement received for 1
+Enter the next packet
+5
+Acknowledgement received for 2
+Enter the next packet
+6
+Acknowledgement received for 3
+Enter the next packet
+7
+Acknowledgement received for 4
+Enter the next packet
+8
+Acknowledgement received for 5
+Enter the next packet
+9
+Acknowledgement failed and resending packet 6
+Writing : 6
+Enter the next packet
+10
+Acknowledgement received for 6
+Acknowledgement received for 7
+Acknowledgement received for 8
+Acknowledgement received for 9
+Acknowledgement received for 10
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 6, 10, -2, -2, -2]
+Total packets sent after packet failures : 11
+
+//-2 represents a time delay caused by one packet
+
+
+RECEIVER SIDE :
+
+Failed packet detected : Packet:6 |FailStatus:6 |ack:-1
+Packet value set as -1 : Packet:-1 |FailStatus:-1 |ack:-1
+Updated failed packet position : 
+Packet:6 |FailStatus:4 |ack:-1
+
+
+ */
+
